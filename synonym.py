@@ -11,7 +11,11 @@ def handle_dialog(request, response, user_storage):
         response.set_text('Привет! Назови слово, к которому нужно подобрать синоним.')
         return response, user_storage
     word_to_search = request.command.lower()
-    response.set_text(get_synonym(word_to_search))
+    text = analyze(word_to_search)
+    if text is None:
+        response.set_text('Я тебя не поняла. Назови слово, синоним к которому ты хочешь подобрать.')
+    else:
+        response.set_text(get_synonym(text))
     return response, user_storage
 
 
